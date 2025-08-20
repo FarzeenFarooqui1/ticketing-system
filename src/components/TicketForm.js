@@ -1,64 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const TicketForm = ({ onSubmit }) => {
-  const [form, setForm] = useState({ title: '', category: '', description: '' });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.id]: e.target.value });
-  };
+function TicketForm({ onAddTicket }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("Open");
+  const [priority, setPriority] = useState("Medium");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ ...form, status: 'Open' });
-    setForm({ title: '', category: '', description: '' });
+    if (!title.trim() || !description.trim()) return;
+
+    const newTicket = {
+      id: Date.now(),
+      title,
+      description,
+      status,
+      priority,
+    };
+
+    onAddTicket(newTicket);
+
+    // Reset form
+    setTitle("");
+    setDescription("");
+    setStatus("Open");
+    setPriority("Medium");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Submit a Ticket</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-4 rounded-2xl shadow mb-6 max-w-md mx-auto"
+    >
+      <h2 className="font-semibold text-lg mb-4">Create Ticket</h2>
 
-      <label className="block mb-1 font-medium">Issue Title</label>
       <input
-        id="title"
-        value={form.title}
-        onChange={handleChange}
-        required
-        className="w-full p-2 border border-gray-300 rounded mb-4"
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="p-2 border rounded-lg w-full mb-3"
       />
 
-      <label className="block mb-1 font-medium">Category</label>
-      <select
-        id="category"
-        value={form.category}
-        onChange={handleChange}
-        required
-        className="w-full p-2 border border-gray-300 rounded mb-4"
-      >
-        <option value="">-- Select --</option>
-        <option>Hardware</option>
-        <option>Software</option>
-        <option>Network</option>
-        <option>Other</option>
-      </select>
-
-      <label className="block mb-1 font-medium">Description</label>
       <textarea
-        id="description"
-        value={form.description}
-        onChange={handleChange}
-        rows="4"
-        required
-        className="w-full p-2 border border-gray-300 rounded mb-4"
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="p-2 border rounded-lg w-full mb-3"
       />
+
+      <div className="flex gap-3 mb-3">
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="p-2 border rounded-lg w-1/2"
+        >
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Closed">Closed</option>
+        </select>
+
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+          className="p-2 border rounded-lg w-1/2"
+        >
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
 
       <button
         type="submit"
-        className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
       >
-        Submit
+        Add Ticket
       </button>
     </form>
   );
-};
+}
 
 export default TicketForm;
