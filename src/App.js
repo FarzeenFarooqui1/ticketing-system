@@ -3,7 +3,7 @@ import TicketForm from './components/TicketForm';
 import TicketList from './components/TicketList';
 
 function App() {
-   const [tickets, setTickets] = useState([
+ const [tickets, setTickets] = useState([
     {
       id: 1,
       title: "Fix printer issue",
@@ -30,6 +30,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const [filterPriority, setFilterPriority] = useState("All");
+  const [sortOption, setSortOption] = useState("Newest");
 
   // Add ticket from TicketForm
   const addTicket = (ticket) => {
@@ -37,7 +38,7 @@ function App() {
   };
 
   // Apply filters + search
-  const filteredTickets = tickets.filter((ticket) => {
+  let filteredTickets = tickets.filter((ticket) => {
     const matchesSearch =
       ticket.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       ticket.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -51,6 +52,27 @@ function App() {
     return matchesSearch && matchesStatus && matchesPriority;
   });
 
+  // Sorting logic
+  filteredTickets = filteredTickets.sort((a, b) => {
+    switch (sortOption) {
+      case "Newest":
+        return b.id - a.id;
+      case "Oldest":
+        return a.id - b.id;
+      case "PriorityHighLow":
+        const priorityOrderHL = { High: 3, Medium: 2, Low: 1 };
+        return priorityOrderHL[b.priority] - priorityOrderHL[a.priority];
+      case "PriorityLowHigh":
+        const priorityOrderLH = { High: 3, Medium: 2, Low: 1 };
+        return priorityOrderLH[a.priority] - priorityOrderLH[b.priority];
+      case "Status":
+        const statusOrder = { Open: 3, "In Progress": 2, Closed: 1 };
+        return statusOrder[b.status] - statusOrder[a.status];
+      default:
+        return 0;
+    }
+  });
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <h1 className="text-2xl font-bold mb-6 text-center">IT Ticketing System</h1>
@@ -58,7 +80,7 @@ function App() {
       {/* Form to add new ticket */}
       <TicketForm onAddTicket={addTicket} />
 
-      {/* Filters + Search */}
+      {/* Filters + Search + Sorting */}
       <div className="flex flex-col md:flex-row gap-4 mb-6 justify-center">
         <input
           type="text"
@@ -88,6 +110,18 @@ function App() {
           <option value="High">High</option>
           <option value="Medium">Medium</option>
           <option value="Low">Low</option>
+        </select>
+
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="p-2 border rounded-lg"
+        >
+          <option value="Newest">Newest</option>
+          <option value="Oldest">Oldest</option>
+          <option value="PriorityHighLow">Priority: High → Low</option>
+          <option value="PriorityLowHigh">Priority: Low → High</option>
+          <option value="Status">Status: Open → Closed</option>
         </select>
       </div>
 
