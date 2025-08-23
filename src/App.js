@@ -3,29 +3,7 @@ import TicketForm from './components/TicketForm';
 import TicketList from './components/TicketList';
 
 function App() {
- const [tickets, setTickets] = useState([
-    {
-      id: 1,
-      title: "Fix printer issue",
-      description: "Printer in HR is not working.",
-      status: "Open",
-      priority: "High",
-    },
-    {
-      id: 2,
-      title: "Update antivirus",
-      description: "Need to update antivirus software.",
-      status: "In Progress",
-      priority: "Medium",
-    },
-    {
-      id: 3,
-      title: "Replace keyboard",
-      description: "Keyboard in Finance is broken.",
-      status: "Closed",
-      priority: "Low",
-    },
-  ]);
+ const [tickets, setTickets] = useState([]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
@@ -54,24 +32,25 @@ function App() {
 
   // Sorting logic
   filteredTickets = filteredTickets.sort((a, b) => {
-    switch (sortOption) {
-      case "Newest":
-        return b.id - a.id;
-      case "Oldest":
-        return a.id - b.id;
-      case "PriorityHighLow":
-        const priorityOrderHL = { High: 3, Medium: 2, Low: 1 };
-        return priorityOrderHL[b.priority] - priorityOrderHL[a.priority];
-      case "PriorityLowHigh":
-        const priorityOrderLH = { High: 3, Medium: 2, Low: 1 };
-        return priorityOrderLH[a.priority] - priorityOrderLH[b.priority];
-      case "Status":
-        const statusOrder = { Open: 3, "In Progress": 2, Closed: 1 };
-        return statusOrder[b.status] - statusOrder[a.status];
-      default:
-        return 0;
-    }
-  });
+  switch (sortOption) {
+    case "Newest":
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    case "Oldest":
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    case "PriorityHighLow":
+      const priorityOrderHL = { High: 3, Medium: 2, Low: 1 };
+      return priorityOrderHL[b.priority] - priorityOrderHL[a.priority];
+    case "PriorityLowHigh":
+      const priorityOrderLH = { High: 3, Medium: 2, Low: 1 };
+      return priorityOrderLH[a.priority] - priorityOrderLH[b.priority];
+    case "Status":
+      const statusOrder = { Open: 3, "In Progress": 2, Closed: 1 };
+      return statusOrder[b.status] - statusOrder[a.status];
+    default:
+      return 0;
+  }
+});
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

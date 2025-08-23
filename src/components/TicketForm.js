@@ -8,19 +8,19 @@ function TicketForm({ onAddTicket }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title.trim() || !description.trim()) return;
 
     const newTicket = {
-      id: Date.now(),
+      id: Date.now(), // unique ID
       title,
       description,
       status,
       priority,
+      createdAt: new Date().toISOString(), // timestamp
     };
 
     onAddTicket(newTicket);
 
-    // Reset form
+    // reset form
     setTitle("");
     setDescription("");
     setStatus("Open");
@@ -30,15 +30,16 @@ function TicketForm({ onAddTicket }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-4 rounded-2xl shadow mb-6 max-w-md mx-auto"
+      className="bg-white p-4 rounded-lg shadow-md mb-6"
     >
-      <h2 className="font-semibold text-lg mb-4">Create Ticket</h2>
+      <h2 className="text-xl font-semibold mb-4">Create New Ticket</h2>
 
       <input
         type="text"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        required
         className="p-2 border rounded-lg w-full mb-3"
       />
 
@@ -46,6 +47,7 @@ function TicketForm({ onAddTicket }) {
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        required
         className="p-2 border rounded-lg w-full mb-3"
       />
 
@@ -65,9 +67,9 @@ function TicketForm({ onAddTicket }) {
           onChange={(e) => setPriority(e.target.value)}
           className="p-2 border rounded-lg w-1/2"
         >
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
           <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
         </select>
       </div>
 

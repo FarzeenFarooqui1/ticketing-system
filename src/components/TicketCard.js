@@ -1,35 +1,29 @@
+
+
 import React from "react";
 
 function TicketCard({ ticket }) {
-  return (
-    <div className="bg-white p-4 rounded-2xl shadow hover:shadow-md transition">
-      <h2 className="font-semibold text-lg">{ticket.title}</h2>
-      <p className="text-sm text-gray-600 mb-2">{ticket.description}</p>
+  // Format the createdAt date nicely
+  const formattedDate = new Date(ticket.createdAt).toLocaleString([], {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 
-      <div className="flex justify-between text-sm">
-        <span
-          className={`px-2 py-1 rounded-full text-white ${
-            ticket.status === "Open"
-              ? "bg-green-500"
-              : ticket.status === "In Progress"
-              ? "bg-yellow-500"
-              : "bg-gray-500"
-          }`}
-        >
-          {ticket.status}
+  return (
+    <div className="bg-white shadow-md rounded-lg p-4 mb-4 border border-gray-200">
+      <h3 className="text-lg font-semibold mb-1">{ticket.title}</h3>
+      <p className="text-gray-600 mb-2">{ticket.description}</p>
+
+      <div className="flex flex-wrap gap-3 text-sm mb-2">
+        <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
+          Status: {ticket.status}
         </span>
-        <span
-          className={`px-2 py-1 rounded-full text-white ${
-            ticket.priority === "High"
-              ? "bg-red-500"
-              : ticket.priority === "Medium"
-              ? "bg-blue-500"
-              : "bg-gray-400"
-          }`}
-        >
-          {ticket.priority}
+        <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">
+          Priority: {ticket.priority}
         </span>
       </div>
+
+      <p className="text-xs text-gray-500">Created: {formattedDate}</p>
     </div>
   );
 }
