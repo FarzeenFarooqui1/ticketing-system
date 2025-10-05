@@ -32,7 +32,7 @@ function TicketForm({ onAddTicket }) {
       onSubmit={handleSubmit}
       className="bg-white p-4 rounded-lg shadow-md mb-6"
     >
-      <h2 className="text-xl font-semibold mb-4">Create New Ticket</h2>
+      <h2 className="text-xl font-semibold mb-4"data-testid="ticket-title">Create New Ticket</h2>
 
       <input
         type="text"
@@ -57,9 +57,9 @@ function TicketForm({ onAddTicket }) {
           onChange={(e) => setStatus(e.target.value)}
           className="p-2 border rounded-lg w-1/2"
         >
-          <option value="Open">Open</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Closed">Closed</option>
+          <option value="Open" data-testid="open-option" >Open</option>
+          <option value="In Progress" data-testid="in-progress-option">In Progress</option>
+          <option value="Closed" data-testid="closed-option">Closed</option>
         </select>
 
         <select
@@ -67,9 +67,9 @@ function TicketForm({ onAddTicket }) {
           onChange={(e) => setPriority(e.target.value)}
           className="p-2 border rounded-lg w-1/2"
         >
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
+          <option value="High" data-testid="high-option">High</option>
+          <option value="Medium" data-testid="high-medium">Medium</option>
+          <option value="Low" data-testid="high-low">Low</option>
         </select>
       </div>
 

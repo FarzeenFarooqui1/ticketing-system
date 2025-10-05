@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-2xl font-bold mb-6 text-center">IT Ticketing System</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center" data-testid="app-title" > IT Ticketing System</h1>
 
       {/* Form to add new ticket */}
       <TicketForm onAddTicket={addTicket} />
@@ -74,10 +74,10 @@ function App() {
           onChange={(e) => setFilterStatus(e.target.value)}
           className="p-2 border rounded-lg"
         >
-          <option value="All">All Statuses</option>
-          <option value="Open">Open</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Closed">Closed</option>
+          <option value="All" data-testid="ticket-all" >All Statuses</option>
+          <option value="Open"data-testid="ticket-option">Open</option>
+          <option value="In Progress"data-testid="ticket-in-progress">In Progress</option>
+          <option value="Closed" data-testid="ticket-all">Closed</option>
         </select>
 
         <select
@@ -85,10 +85,10 @@ function App() {
           onChange={(e) => setFilterPriority(e.target.value)}
           className="p-2 border rounded-lg"
         >
-          <option value="All">All Priorities</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
+          <option value="All" data-testid="ticket-all_priorities">All Priorities</option>
+          <option value="High"data-testid="ticket-high">High</option>
+          <option value="Medium"data-testid="ticket-medium">Medium</option>
+          <option value="Low"data-testid="ticket-low">Low</option>
         </select>
 
         <select
@@ -96,11 +96,11 @@ function App() {
           onChange={(e) => setSortOption(e.target.value)}
           className="p-2 border rounded-lg"
         >
-          <option value="Newest">Newest</option>
-          <option value="Oldest">Oldest</option>
-          <option value="PriorityHighLow">Priority: High → Low</option>
-          <option value="PriorityLowHigh">Priority: Low → High</option>
-          <option value="Status">Status: Open → Closed</option>
+          <option value="Newest" data-testid="ticket-newest">Newest</option>
+          <option value="Oldest" data-testid="ticket-oldest">Oldest</option>
+          <option value="PriorityHighLow" data-testid="ticket-High → Low">Priority: High → Low</option>
+          <option value="PriorityLowHigh" data-testid="ticket-Low → High">Priority: Low → High</option>
+          <option value="Status" data-testid="ticket-Open → Closed">Status: Open → Closed</option>
         </select>
       </div>
 

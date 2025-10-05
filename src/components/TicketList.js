@@ -20,3 +20,4 @@ function TicketList({ tickets }) {
 }
 
 export default TicketList;
+
